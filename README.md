@@ -8,7 +8,9 @@ This has two services that are basically identical applications that will sort o
   - install it with `brew install kcat` on a Mac
 - Docker (for running the kafka containers in docker-compose.yml)
 - A honeycomb API key for sending trace data to Honeycomb
-- Java > OpenJDK version 17.0
+- Java >= OpenJDK version 17.0
+- Gradle
+  - install it with `brew install gradle` on a Mac
 
 ## Setup
 
