@@ -8,4 +8,4 @@ export OTEL_SERVICE_NAME="camel-kafka-demo-producer"
 
 gradle bootJar
 
-java -javaagent:../lib/opentelemetry-javaagent.jar -jar build/libs/camel-kafka-demo-producer-0.0.1-SNAPSHOT.jar
+java -javaagent:../lib/honeycomb-opentelemetry-javaagent.jar -jar build/libs/camel-kafka-demo-producer-0.0.1-SNAPSHOT.jar
