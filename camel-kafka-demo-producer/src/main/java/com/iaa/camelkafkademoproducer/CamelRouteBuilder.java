@@ -13,9 +13,8 @@ public class CamelRouteBuilder extends RouteBuilder {
   public void configure() throws Exception {
     // from("timer:foo").to("log:bar");
     from("kafka:pageviews?brokers=localhost:9092")
-        // .process(new TraceEnrichingProcessor(null))
         .process(expression -> {
-          Tracer tracer = GlobalOpenTelemetry.getTracer("traceenrichingprocessor");
+          Tracer tracer = GlobalOpenTelemetry.getTracer("camel-producer-tracer");
           Span mapperSpan = tracer.spanBuilder("producer-mapper").startSpan();
           // Custom processing logic
           String body = expression.getIn().getBody(String.class);
