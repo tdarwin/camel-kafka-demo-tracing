@@ -20,7 +20,7 @@ public class CamelRouteBuilder extends RouteBuilder {
 
     // from("timer:foo").to("log:bar");
     from("kafka:viewedpages?brokers=localhost:9092")
-        // .process(new TraceEnrichingProcessor(null))
+        .process("traceEnrichingProcessor")
         .process(expression -> {
           Span mapperSpan = tracer.spanBuilder("consumer-mapper").startSpan();
           // Custom processing logic
