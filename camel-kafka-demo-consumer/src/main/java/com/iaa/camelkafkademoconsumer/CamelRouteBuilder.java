@@ -13,14 +13,15 @@ public class CamelRouteBuilder extends RouteBuilder {
   public void configure() throws Exception {
     // from("timer:foo").to("log:bar");
     from("kafka:viewedpages?brokers=localhost:9092")
-        .process(processor -> {
+        // .process(new TraceEnrichingProcessor(null))
+        .process(expression -> {
           Tracer tracer = GlobalOpenTelemetry.getTracer("camel-consumer-tracer");
-          Span span = tracer.spanBuilder("consumer-mapper").startSpan();
+          Span mapperSpan = tracer.spanBuilder("consumer-mapper").startSpan();
           // Custom processing logic
-          String body = processor.getIn().getBody(String.class);
+          String body = expression.getIn().getBody(String.class);
           String modifiedBody = "Processed: " + body;
-          processor.getIn().setBody(modifiedBody);
-          span.end();
+          expression.getIn().setBody(modifiedBody);
+          mapperSpan.end();
         })
         .to("kafka:processedviews?brokers=localhost:9092")
         .to("log:processedviews");
