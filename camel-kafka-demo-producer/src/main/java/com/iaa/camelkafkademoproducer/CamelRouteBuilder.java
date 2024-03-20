@@ -20,7 +20,7 @@ public class CamelRouteBuilder extends RouteBuilder {
         // camel-opentelemetry doesn't seem to provide a way to get the current span.
         OpenTelemetrySpanAdapter camelSpan = (OpenTelemetrySpanAdapter) ActiveSpanManager.getSpan(exchange);
 
-        try (AutoCloseable closeyMcCloserson = camelSpan.makeCurrent()) {
+        try (AutoCloseable scope = camelSpan.makeCurrent()) {
           // Custom processing logic
           modifyBody(exchange);
         }

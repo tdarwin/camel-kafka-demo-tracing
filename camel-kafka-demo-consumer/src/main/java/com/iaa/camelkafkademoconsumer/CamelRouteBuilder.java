@@ -15,7 +15,7 @@ public class CamelRouteBuilder extends RouteBuilder {
   public void configure() throws Exception {
     from("kafka:viewedpages?brokers=localhost:9092")
       .process(exchange -> {
-        try (AutoCloseable closeyMcCloserson = ActiveSpanManager.getSpan(exchange).makeCurrent()) {
+        try (AutoCloseable scope = ActiveSpanManager.getSpan(exchange).makeCurrent()) {
           modifyBody(exchange);
         }
       })
